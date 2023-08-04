@@ -1,4 +1,22 @@
 /* write your custom templates css styles */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+.menuCustom .card{
+	height: 90px;
+}
+.menuCustom .card :hover{
+ 	cursor: pointer !important;
+}
+.menuCustom .card p{
+	font-size: 14px;
+	color: rgba(0,71,133,1);
+	line-height: 16px;
+}    
+.menuCustom .row {
+	padding-bottom: 10px;
+}
+.menuCustom{
+	height: 400px;
+}
 .liteTheme-one { /*--Theme one kore lite--*/
    --sdk-chat-widow-default-white: #ffffff;
    --sdk-chat-widow-primary-font-color: #26344a;

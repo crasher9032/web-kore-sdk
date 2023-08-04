@@ -1,3 +1,13 @@
+function getRandomString(length) {
+    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var charLength = chars.length;
+    var result = '';
+    for ( var i = 0; i < length; i++ ) {
+       result += chars.charAt(Math.floor(Math.random() * charLength));
+    }
+    console.log(result);
+    return result;
+}
 (function($){
 
     $(document).ready(function () {
@@ -5,9 +15,9 @@
             var jsonData = {
                 "clientId": options.clientId,
                 "clientSecret": options.clientSecret,
-                "identity": options.userIdentity,
+                "identity": getRandomString(15),
                 "aud": "",
-                "isAnonymous": false
+                "isAnonymous": true
             };
             $.ajax({
                 url: options.JWTUrl,

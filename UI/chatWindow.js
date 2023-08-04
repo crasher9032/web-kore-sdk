@@ -1213,7 +1213,7 @@
                     
                 }else{
                     chatWindowHtml.addClass('minimize');
-                    chatWindowHtml.find('.minimized-title').html("Talk to " + me.config.chatTitle);
+                    chatWindowHtml.find('.minimized-title').html("Yo te puedo ayudar");
                     me.skipedInit=true;
                     if(me.config.multiPageApp && me.config.multiPageApp.enable && maintainContext){
                         setTimeout(function () {
@@ -1693,7 +1693,7 @@
                         if (me.expanded === false && _chatContainer.hasClass("ui-draggable")) {
                             //_chatContainer.draggable("destroy");
                         }
-                        _chatContainer.find('.minimized-title').html("Talk to " + me.config.chatTitle);
+                        _chatContainer.find('.minimized-title').html("Continuemos la conversación");
                         me.minimized = true;
                         if (me.expanded === true) {
                             $('.kore-chat-overlay').hide();

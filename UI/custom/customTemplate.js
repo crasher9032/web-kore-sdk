@@ -276,6 +276,29 @@
 			});
 			$(messageHtml).data(msgData);
 		}
+		//comienzan custom template
+		else if (msgData.message[0] && msgData.message[0].component && msgData.message[0].component.payload && msgData.message[0].component.payload.template_type === "loginForm") {
+			messageHtml = $(this.getChatTemplate("loginForm", msgData.message[0].component.payload.url)).tmpl({
+				'msgData': msgData,
+				'helpers': this.helpers,
+				'extension': this.extension
+			});
+			$(messageHtml).data(msgData);
+		}
+		else if (msgData.message[0] && msgData.message[0].component && msgData.message[0].component.payload && msgData.message[0].component.payload.template_type === "menuCustom") {
+			messageHtml = $(this.getChatTemplate("menuCustom")).tmpl({
+				'msgData': msgData,
+				'helpers': this.helpers,
+				'extension': this.extension
+			});
+			$(messageHtml).find('.card').on('click',(e)=>{
+				e.preventDefault();
+				let texto = $(e.currentTarget).find('p').text();
+				let caja = $(".chatInputBox");
+				caja.text(texto);
+				this.chatInitialize.sendMessage(caja, texto);
+			});
+		}
 	   return messageHtml;
 	
 		return "";
@@ -290,7 +313,7 @@
 	*/
 	
 	
-	customTemplate.prototype.getChatTemplate = function (tempType) {
+	customTemplate.prototype.getChatTemplate = function (tempType, url) {
 		/* Sample template structure for dropdown
 		var message =  {
 			"type": "template",
@@ -328,6 +351,102 @@
 		};
 		print(JSON.stringify(message)); 
 		*/
+		var menuCustom = `
+			<div>
+				<div class="menuCustom">
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								<div class="card">
+									<div class="card-body text-center">
+										<h3>
+											<i class="bi bi-credit-card"></i>
+										</h3>
+										<p>Busco una tarjeta</p>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="card">
+									<div class="card-body text-center">
+										<h3>
+											<i class="bi bi-cash-coin"></i>
+										</h3>
+										<p>Quiero un préstamo</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="card">
+									<div class="card-body text-center">
+										<h3>
+											<i class="bi bi-bank"></i>
+										</h3>
+										<p>Quiero una cuenta</p>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="card">
+									<div class="card-body text-center">
+										<h3>
+											<i class="bi bi-life-preserver"></i>
+										</h3>
+										<p>Busco un seguro</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="card">
+									<div class="card-body text-center">
+										<h3>
+											<i class="bi bi-piggy-bank"></i>
+										</h3>
+										<p>Quiero ahorrar</p>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="card">
+									<div class="card-body text-center">
+										<h3>
+											<i class="bi bi-graph-up"></i>
+										</h3>
+										<p>Inversiones</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="card">
+									<div class="card-body text-center">
+										<h3>
+											<i class="bi bi-house"></i>
+										</h3>
+										<p>Inmuebles</p>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="card">
+									<div class="card-body text-center">
+										<h3>
+											<i class="bi bi-wallet2"></i>
+										</h3>
+										<p>Mi banca</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
 		var dropdownTemplate = '<script id="chat_message_tmpl" type="text/x-jqury-tmpl"> \
 			{{if msgData.message}} \
 				<li {{if msgData.type !== "bot_response"}} id="msg_${msgItem.clientMessageId}"{{/if}} class="{{if msgData.type === "bot_response"}}fromOtherUsers{{else}}fromCurrentUser{{/if}} with-icon"> \
@@ -3256,7 +3375,15 @@ var message= {
         } 
 		else if (tempType === "systemTemplate") {
             return systemTemplate;
-        }
+        }else if(tempType === "loginForm"){
+				return `
+				<div>
+					<iframe src="${url}" width="100%" height="600px"/>
+				</div>
+				`;
+		}else if(tempType === "menuCustom"){
+			return menuCustom;
+		}
 		else {
 			return "";
 		}
